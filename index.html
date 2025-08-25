@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Woly Yoga — Member Manager</title>
+  <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <header>
+    <div class="header-content">
+      <h1>🧘‍♀️ Woly Yoga — Member Manager</h1>
+      <nav class="tabs">
+        <button class="tab-btn active" data-tab="add">
+          <span class="tab-icon">➕</span>
+          <span>Add Member</span>
+        </button>
+        <button class="tab-btn" data-tab="renew">
+          <span class="tab-icon">♻️</span>
+          <span>Renew Package</span>
+        </button>
+        <button class="tab-btn" data-tab="dashboard">
+          <span class="tab-icon">📊</span>
+          <span>Dashboard</span>
+        </button>
+        <button class="tab-btn" data-tab="admin">
+          <span class="tab-icon">🔐</span>
+          <span>Admin</span>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ADD MEMBER -->
+  <section id="tab-add" class="tab active">
+    <div class="container">
+      <div class="page-header">
+        <h2>Add New Member</h2>
+        <p class="page-subtitle">Register a new yoga member with their details and package information</p>
+      </div>
+      
+      <form id="addMemberForm" class="form-card">
+        <fieldset class="form-section">
+          <legend>👤 Basic Details</legend>
+          <div class="grid-2">
+            <label class="form-field">
+              <span class="field-label">Full Name*</span>
+              <input required name="name" type="text" placeholder="Anita Sharma" class="input-field">
+            </label>
+            <label class="form-field">
+              <span class="field-label">Image URL</span>
+              <input name="imageUrl" type="url" placeholder="https://..." class="input-field">
+            </label>
+            <label class="form-field">
+              <span class="field-label">Primary Contact*</span>
+              <input required name="contact" type="tel" placeholder="+91 98xxxxxx" class="input-field">
+            </label>
+            <label class="form-field">
+              <span class="field-label">WhatsApp</span>
+              <input name="whatsapp" type="tel" placeholder="+91 98xxxxxx" class="input-field">
+            </label>
+            <label class="form-field">
+              <span class="field-label">Address</span>
+              <input name="address" type="text" placeholder="Street, City" class="input-field">
+            </label>
+            <label class="form-field">
+              <span class="field-label">Date of Birth</span>
+              <input id="dob" name="dob" type="date" class="input-field">
+            </label>
+            <label class="form-field">
+              <span class="field-label">Age</span>
+              <input id="age" name="age" type="number" min="0" readonly class="input-field">
+            </label>
+            <label class="form-field">
+              <span class="field-label">Height (cm)</span>
+              <input name="height" type="number" step="0.1" min="0" class="input-field">
+            </label>
+            <label class="form-field">
+              <span class="field-label">Weight (kg)</span>
+              <input name="weight" type="number" step="0.1" min="0" class="input-field">
+            </label>
+          </div>
+        </fieldset>
+
+        <fieldset class="form-section">
+          <legend>🏥 Medical Issues</legend>
+          <div class="grid-2">
+            <label class="form-field">
+              <span class="field-label">Search conditions</span>
+              <input id="medicalSearch" type="text" placeholder="Type to filter list below" class="input-field">
+            </label>
+            <label class="form-field">
+              <span class="field-label">Selected (comma-separated)</span>
+              <input id="medicalSelectedText" name="medicalIssues" type="text" placeholder="e.g., asthma, back pain" class="input-field">
+            </label>
+          </div>
+          <div class="medical-box">
+            <div class="medical-list">
+              <p class="section-hint">Click to add/remove:</p>
+              <ul id="medicalList" class="taglist"></ul>
+            </div>
+            <label class="form-field">
+              <span class="field-label">Other (free text)</span>
+              <input name="medicalOther" type="text" placeholder="Any other details" class="input-field">
+            </label>
+          </div>
+        </fieldset>
+
+        <fieldset class="form-section">
+          <legend>📦 Package</legend>
+          <div class="grid-3">
+            <label class="form-field">
+              <span class="field-label">Joining Date*</span>
+              <input required id="joinDate" name="joinDate" type="date" class="input-field">
+            </label>
+            <label class="form-field">
+              <span class="field-label">Package*</span>
+              <select required id="package" name="package" class="input-field">
+                <option value="" disabled selected>Select package</option>
+                <option value="1m">1 month</option>
+                <option value="2m">2 months</option>
+                <option value="3m">3 months</option>
+                <option value="6m">6 months</option>
+                <option value="12m">1 year</option>
+              </select>
+            </label>
+            <label class="form-field">
+              <span class="field-label">Price (₹)</span>
+              <input id="price" name="price" type="number" min="0" placeholder="Auto or enter custom" class="input-field">
+            </label>
+            <label class="form-field">
+              <span class="field-label">Expiry Date</span>
+              <input id="expiryDate" name="expiryDate" type="date" readonly class="input-field">
+            </label>
+          </div>
+        </fieldset>
+
+        <div class="form-actions">
+          <button type="submit" class="btn btn-primary">
+            <span>💾 Save Member</span>
+          </button>
+          <span id="addStatus" class="status-message"></span>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <!-- RENEW -->
+  <section id="tab-renew" class="tab">
+    <div class="container">
+      <div class="page-header">
+        <h2>Renew Membership</h2>
+        <p class="page-subtitle">Extend an existing member's package</p>
+      </div>
+      
+      <form id="renewForm" class="form-card">
+        <fieldset class="form-section">
+          <legend>♻️ Renew Membership</legend>
+          <div class="grid-3">
+            <label class="form-field">
+              <span class="field-label">Member*</span>
+              <select required id="renewMemberId" name="id" class="input-field"></select>
+            </label>
+            <label class="form-field">
+              <span class="field-label">New Package*</span>
+              <select required id="renewPackage" name="package" class="input-field">
+                <option value="1m">1 month</option>
+                <option value="2m">2 months</option>
+                <option value="3m">3 months</option>
+                <option value="6m">6 months</option>
+                <option value="12m">1 year</option>
+              </select>
+            </label>
+            <label class="form-field">
+              <span class="field-label">New Price (₹)</span>
+              <input id="renewPrice" name="price" type="number" min="0" placeholder="Auto or enter custom" class="input-field">
+            </label>
+            <label class="form-field">
+              <span class="field-label">New Expiry Date</span>
+              <input id="renewExpiry" name="expiryDate" type="date" readonly class="input-field">
+            </label>
+          </div>
+        </fieldset>
+        <div class="form-actions">
+          <button type="submit" class="btn btn-primary">
+            <span>🔄 Save Renewal</span>
+          </button>
+          <span id="renewStatus" class="status-message"></span>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <!-- DASHBOARD -->
+  <section id="tab-dashboard" class="tab">
+    <div class="container">
+      <div class="page-header">
+        <h2>Expiry Dashboard</h2>
+        <p class="page-subtitle">Monitor member expiration status and renewals</p>
+      </div>
+      
+      <div class="dashboard-controls">
+        <button id="refreshBtn" class="btn btn-secondary">
+          <span>🔄 Refresh Members</span>
+        </button>
+        <span id="loadStatus" class="status-message"></span>
+      </div>
+      
+      <div id="counts" class="stats-grid"></div>
+      
+      <div class="dashboard-boards">
+        <div class="board expiring-soon">
+          <h3>⚠️ Expiring in 3 days</h3>
+          <ul id="expiring3"></ul>
+        </div>
+        <div class="board expiring-week">
+          <h3>📅 Expiring in a week</h3>
+          <ul id="expiring7"></ul>
+        </div>
+        <div class="board expired-recent">
+          <h3>🔴 Expired 1 day ago</h3>
+          <ul id="expired1"></ul>
+        </div>
+        <div class="board expired-week">
+          <h3>📉 Expired a week ago</h3>
+          <ul id="expired7"></ul>
+        </div>
+        <div class="board expired-month">
+          <h3>⏰ Expired a month ago</h3>
+          <ul id="expired30"></ul>
+        </div>
+        <div class="board expired-old">
+          <h3>💀 Expired > 1 month</h3>
+          <ul id="expiredMore"></ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ADMIN -->
+  <section id="tab-admin" class="tab">
+    <div class="container">
+      <div class="page-header">
+        <h2>Admin Panel</h2>
+        <p class="page-subtitle">View financial reports and analytics</p>
+      </div>
+      
+      <div class="admin-card">
+        <p class="admin-instruction">Enter admin password to view total revenue.</p>
+        <div class="admin-controls">
+          <input id="adminPassword" type="password" placeholder="Admin password" class="input-field">
+          <button id="revenueBtn" class="btn btn-primary">
+            <span>💰 Show Total Earned</span>
+          </button>
+        </div>
+        <h3 id="revenue" class="revenue-display"></h3>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <small>© 2025 Woly Yoga. All rights reserved.</small>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
