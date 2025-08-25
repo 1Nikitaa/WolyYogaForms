@@ -1,6 +1,6 @@
 // ======= CONFIG =======
 // Replace with your Apps Script Web App URL after you deploy it.
-const ENDPOINT = "https://script.google.com/macros/s/AKfycbwlGoUPo0ghtHPc3ij3zQFlXNBVf9vylSrIseMu3PKAp8w-tjLp5v4ZfQ4MKTrM7WeqMA/exec";
+const ENDPOINT = "https://script.google.com/macros/s/AKfycbzmfXEGNTrhuoSH-YLvDCnVcQ2EkLoMpDuLsNneUZfXUqEuO0JR23zqXrLpks60dK0hKQ/exec";
 // Basic price list (you can change numbers below)
 const PRICE_LIST = { "1m": 1000, "2m": 1800, "3m": 2600, "6m": 4800, "12m": 9000 };
 
@@ -221,7 +221,7 @@ function initRenew() {
         const res = await fetch(ENDPOINT, {
           method: "POST",
           headers: {"Content-Type":"application/json"},
-          body: JSON.stringify(payload)
+          body: JSON.stringify(payload),
         });
         const data = await res.json();
         if (data.ok) {
@@ -271,7 +271,7 @@ async function loadMembers() {
   
   // GET list
   try {
-    const res = await fetch(ENDPOINT + "?action=listMembers");
+    const res = await fetch(`${ENDPOINT}?action=listMembers`);
     const data = await res.json();
     if (!data.ok) {
       if (statusEl) statusEl.textContent = "❌ " + (data.error || "Error");
@@ -360,7 +360,7 @@ function initAdmin() {
         const res = await fetch(ENDPOINT, {
           method: "POST",
           headers: {"Content-Type":"application/json"},
-          body: JSON.stringify({action: "getRevenue", password: pwd})
+          body: JSON.stringify({action: "getRevenue", password: pwd}),
         });
         const data = await res.json();
         
